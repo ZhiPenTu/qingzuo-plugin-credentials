@@ -24,7 +24,7 @@
     "preview": "node scripts/preview.mjs"
   },
   "dependencies": {
-    "@commerce/plugin-sdk": "file:vendor/commerce-plugin-sdk-1.7.0.tgz"
+    "@commerce/plugin-sdk": "file:vendor/commerce-plugin-sdk-1.8.0.tgz"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0"

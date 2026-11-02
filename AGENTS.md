@@ -36,5 +36,5 @@ QINGZUO_HOST_EXECUTABLE=/path/to/Qingzuo npm run test:host
 ## 提交与发布
 
 - 提交信息使用 `feat:` / `fix:` / `test:` / `docs:` / `chore:`。
-- 发布前确认底座 `v0.6.20` 与 `sdk-v1.7.0` 已可用，并在发布流水线设置成功的 `QINGZUO_HOST_RUN_ID`。
+- 发布前确认底座 `v0.6.21` 或更高版本与官方 SDK 已可用，并在发布流水线设置成功的 `QINGZUO_HOST_RUN_ID`。
 - `release/`、`output/`、`node_modules/` 不入库。
