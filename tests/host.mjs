@@ -68,7 +68,9 @@ try {
   await expect(card.getByRole('heading', { name: '凭证管理', exact: true })).toBeVisible();
   await card.getByRole('button', { name: '安装插件', exact: true }).click();
   await expect(card.getByRole('button', { name: '已安装', exact: true })).toBeVisible({ timeout: 60000 });
-  await card.getByRole('button', { name: /^打开(?:工具)?$/ }).click();
+  await page.getByRole('tab', { name: '已安装', exact: true }).click();
+  const installedCard = page.locator('[data-slot="card"]').filter({ hasText: '凭证管理' });
+  await installedCard.getByRole('button', { name: /^打开(?:工具)?$/ }).click();
   await expect.poll(() => application.context().pages().some(candidate => candidate.url().startsWith('commerce-plugin://' + pkg.commerce.id + '/')), { timeout: 60000 }).toBe(true);
   const plugin = application.context().pages().find(candidate => candidate.url().startsWith('commerce-plugin://' + pkg.commerce.id + '/'));
   await expect(plugin.getByRole('heading', { name: '凭证管理', exact: true })).toBeVisible();
