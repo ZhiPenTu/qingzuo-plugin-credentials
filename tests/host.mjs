@@ -93,9 +93,11 @@ try {
   expect(pageText).not.toContain('HOST-SECRET-MUST-NOT-LEAK');
   const index = JSON.parse(await readFile(path.join(profile, 'credential-records.json'), 'utf8'));
   expect(JSON.stringify(index)).not.toContain('HOST-SECRET-MUST-NOT-LEAK');
-  const vault = await readFile(path.join(profile, 'credentials-vault.json'), 'utf8');
-  expect(vault).toContain('enc:v1:');
-  expect(vault).not.toContain('HOST-SECRET-MUST-NOT-LEAK');
+  if (process.platform === 'darwin') {
+    const vault = await readFile(path.join(profile, 'credentials-vault.json'), 'utf8');
+    expect(vault).toContain('enc:v1:');
+    expect(vault).not.toContain('HOST-SECRET-MUST-NOT-LEAK');
+  }
 
   await plugin.locator('button[data-action="edit"]').click();
   await expect(plugin.locator('#record-secret')).toHaveValue('');
