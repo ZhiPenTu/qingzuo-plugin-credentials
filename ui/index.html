@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>凭证管理</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>凭证管理</h1>
+        <span>集中保存 AppID 与密钥，按需授权给其他工具</span>
+      </div>
+      <button id="create-record" class="primary" type="button">新建凭证</button>
+    </header>
+
+    <p class="privacy-note">密钥保存后不会再次显示；其他工具只能在你确认后使用，不能读取密钥。</p>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <main id="content" class="content" aria-busy="true">
+      <section id="loading" class="state-card" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        <p>正在读取凭证…</p>
+      </section>
+
+      <section id="error-state" class="state-card error-card" hidden>
+        <h2>暂时无法读取凭证</h2>
+        <p id="error-message"></p>
+        <button id="retry" class="secondary" type="button">重试</button>
+      </section>
+
+      <section id="empty-state" class="state-card" hidden>
+        <div class="empty-mark" aria-hidden="true">＋</div>
+        <h2>还没有凭证</h2>
+        <p>新建一条凭证后，就可以在支持凭证库的工具里直接选择。</p>
+        <button id="empty-create" class="primary" type="button">新建凭证</button>
+      </section>
+
+      <ul id="record-list" class="record-list"></ul>
+    </main>
+  </div>
+
+  <dialog id="record-dialog" class="dialog">
+    <form id="record-form" method="dialog" novalidate>
+      <div class="dialog-head">
+        <h2 id="record-dialog-title">新建凭证</h2>
+        <button id="record-close" class="icon-button" type="button" aria-label="关闭">×</button>
+      </div>
+      <div class="dialog-body">
+        <label class="field">
+          <span>别名</span>
+          <input id="record-label" name="label" type="text" maxlength="64" autocomplete="off" placeholder="例如：希音正式店铺">
+        </label>
+        <label class="field">
+          <span>AppID</span>
+          <input id="record-app-id" name="appId" type="text" maxlength="256" autocomplete="off" spellcheck="false" placeholder="应用管理里的 AppID">
+        </label>
+        <label class="field">
+          <span>环境</span>
+          <select id="record-environment" name="environment">
+            <option value="production">生产</option>
+            <option value="sandbox">沙箱</option>
+          </select>
+        </label>
+        <label class="field">
+          <span id="record-secret-label">密钥</span>
+          <input id="record-secret" name="secretKey" type="password" maxlength="1024" autocomplete="new-password" spellcheck="false" placeholder="输入密钥">
+          <small id="record-secret-hint" class="hint">保存后无法再次查看；需要更换时只能整体替换。</small>
+        </label>
+        <p id="record-error" class="form-error" role="alert"></p>
+      </div>
+      <div class="dialog-actions">
+        <button id="record-cancel" class="secondary" type="button">取消</button>
+        <button id="record-save" class="primary" type="submit">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="delete-dialog" class="dialog compact">
+    <div class="dialog-head">
+      <h2>删除凭证</h2>
+      <button id="delete-close" class="icon-button" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="dialog-body">
+      <p>删除「<strong id="delete-name"></strong>」后，密钥和所有工具授权会一起清除，且无法恢复。</p>
+      <code id="delete-app-id" class="delete-app-id"></code>
+      <p id="delete-error" class="form-error" role="alert"></p>
+    </div>
+    <div class="dialog-actions">
+      <button id="delete-cancel" class="secondary" type="button">取消</button>
+      <button id="delete-confirm" class="danger" type="button">删除</button>
+    </div>
+  </dialog>
+
+  <dialog id="grants-dialog" class="dialog">
+    <div class="dialog-head">
+      <div>
+        <h2>使用中的工具</h2>
+        <p id="grants-record" class="dialog-subtitle"></p>
+      </div>
+      <button id="grants-close" class="icon-button" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="dialog-body">
+      <ul id="grant-list" class="grant-list"></ul>
+      <p id="grants-empty" class="empty-copy" hidden>还没有工具获得授权。</p>
+      <p id="grants-loading" class="empty-copy" hidden>正在读取授权…</p>
+      <p id="grants-error" class="form-error" role="alert"></p>
+    </div>
+    <div class="dialog-actions">
+      <button id="grants-done" class="primary" type="button">完成</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

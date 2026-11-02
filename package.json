@@ -1,0 +1,33 @@
+{
+  "name": "@commerce/plugin-credentials",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "commerce": {
+    "manifestVersion": 1,
+    "id": "official.credentials",
+    "title": "凭证管理",
+    "description": "统一保存各工具的 AppID 与密钥，按需授权给其他工具使用",
+    "category": "效率工具",
+    "api": "^1.7.0",
+    "ui": "ui/index.html",
+    "releaseNotes": "首个版本：集中保存 AppID 与密钥，支持多条凭证、生产/沙箱环境、工具授权与撤销。",
+    "permissions": {
+      "credentialVault": "manage"
+    },
+    "icon": "data:image/png;base64,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"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "pack": "node scripts/pack-plugin.mjs",
+    "test:host": "node tests/host.mjs",
+    "preview": "node scripts/preview.mjs"
+  },
+  "dependencies": {
+    "@commerce/plugin-sdk": "file:vendor/commerce-plugin-sdk-1.7.0.tgz"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0"
+  },
+  "license": "MIT"
+}
