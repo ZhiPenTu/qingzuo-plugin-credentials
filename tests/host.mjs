@@ -63,6 +63,7 @@ try {
   }, { catalog, bytes: bytes.toString('base64') });
 
   await page.getByRole('button', { name: '工具中心', exact: true }).click();
+  await page.getByRole('tab', { name: '全部', exact: true }).click();
   const card = page.locator('[data-slot="card"]').filter({ hasText: '凭证管理' });
   await expect(card.getByRole('heading', { name: '凭证管理', exact: true })).toBeVisible();
   await card.getByRole('button', { name: '安装插件', exact: true }).click();
